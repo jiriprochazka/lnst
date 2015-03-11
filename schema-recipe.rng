@@ -164,6 +164,10 @@
                 <optional>
                     <ref name="addresses"/>
                 </optional>
+
+                <optional>
+                    <ref name="netem"/>
+                </optional>
             </interleave>
         </element>
     </define>
@@ -445,6 +449,38 @@
                         </choice>
                     </element>
                 </zeroOrMore>
+            </interleave>
+        </element>
+    </define>
+
+    <define name="netem">
+        <element name="netem">
+            <interleave>
+                <optional>
+                    <element name="delay">
+                        <choice>
+                            <attribute name="value"/>
+                            <text/>
+                        </choice>
+                        <!--choice>
+                            <attribute name="variation"/>
+                            <text/>
+                        </choice>
+                        <choice>
+                            <attribute name="correlation"/>
+                            <text/>
+                        </choice>
+                        <choice>
+                            <attribute name="distribution"/>
+                                <choice>
+                                    <value>uniform</value>
+                                    <value>normal</value>
+                                    <value>pareto</value>
+                                    <value>paretonormal</value>
+                                </choice>
+                        </choice-->
+                    </element>
+                </optional>
             </interleave>
         </element>
     </define>
