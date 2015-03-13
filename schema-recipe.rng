@@ -462,7 +462,7 @@
                             <attribute name="value"/>
                             <text/>
                         </choice>
-                        <!--choice>
+                        <choice>
                             <attribute name="variation"/>
                             <text/>
                         </choice>
@@ -472,13 +472,8 @@
                         </choice>
                         <choice>
                             <attribute name="distribution"/>
-                                <choice>
-                                    <value>uniform</value>
-                                    <value>normal</value>
-                                    <value>pareto</value>
-                                    <value>paretonormal</value>
-                                </choice>
-                        </choice-->
+                            <text/>
+                        </choice>
                     </element>
                 </optional>
             </interleave>
