@@ -476,6 +476,62 @@
                         </choice>
                     </element>
                 </optional>
+                <optional>
+                    <element name="loss">
+                        <choice>
+                            <attribute name="value"/>
+                            <text/>
+                        </choice>
+                        <choice>
+                            <attribute name="correlation"/>
+                            <text/>
+                        </choice>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="duplication">
+                        <choice>
+                            <attribute name="value"/>
+                            <text/>
+                        </choice>
+                        <choice>
+                            <attribute name="correlation"/>
+                            <text/>
+                        </choice>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="corruption">
+                        <choice>
+                            <attribute name="value"/>
+                            <text/>
+                        </choice>
+                        <choice>
+                            <attribute name="correlation"/>
+                            <text/>
+                        </choice>
+                    </element>
+                </optional>
+                <optional>
+                    <element name="reordering">
+                        <choice>
+                            <attribute name="gap"/>
+                            <text/>
+                        </choice>
+                        <choice>
+                            <attribute name="delay"/>
+                            <text/>
+                        </choice>
+                        <choice>
+                            <attribute name="jitter"/>
+                            <text/>
+                        </choice>
+                        <choice>
+                            <attribute name="correlation"/>
+                            <text/>
+                        </choice>
+                    </element>
+                </optional>
             </interleave>
         </element>
     </define>
