@@ -458,78 +458,37 @@
             <interleave>
                 <optional>
                     <element name="delay">
-                        <choice>
-                            <attribute name="value"/>
-                            <text/>
-                        </choice>
-                        <choice>
-                            <attribute name="variation"/>
-                            <text/>
-                        </choice>
-                        <choice>
-                            <attribute name="correlation"/>
-                            <text/>
-                        </choice>
-                        <choice>
-                            <attribute name="distribution"/>
-                            <text/>
-                        </choice>
+                        <zeroOrMore>
+                            <ref name="params"/>
+                        </zeroOrMore>
                     </element>
                 </optional>
                 <optional>
                     <element name="loss">
-                        <choice>
-                            <attribute name="value"/>
-                            <text/>
-                        </choice>
-                        <choice>
-                            <attribute name="correlation"/>
-                            <text/>
-                        </choice>
+                        <zeroOrMore>
+                            <ref name="params"/>
+                        </zeroOrMore>
                     </element>
                 </optional>
                 <optional>
                     <element name="duplication">
-                        <choice>
-                            <attribute name="value"/>
-                            <text/>
-                        </choice>
-                        <choice>
-                            <attribute name="correlation"/>
-                            <text/>
-                        </choice>
+                        <zeroOrMore>
+                            <ref name="params"/>
+                        </zeroOrMore>
                     </element>
                 </optional>
                 <optional>
                     <element name="corruption">
-                        <choice>
-                            <attribute name="value"/>
-                            <text/>
-                        </choice>
-                        <choice>
-                            <attribute name="correlation"/>
-                            <text/>
-                        </choice>
+                        <zeroOrMore>
+                            <ref name="params"/>
+                        </zeroOrMore>
                     </element>
                 </optional>
                 <optional>
                     <element name="reordering">
-                        <choice>
-                            <attribute name="gap"/>
-                            <text/>
-                        </choice>
-                        <choice>
-                            <attribute name="delay"/>
-                            <text/>
-                        </choice>
-                        <choice>
-                            <attribute name="jitter"/>
-                            <text/>
-                        </choice>
-                        <choice>
-                            <attribute name="correlation"/>
-                            <text/>
-                        </choice>
+                        <zeroOrMore>
+                            <ref name="params"/>
+                        </zeroOrMore>
                     </element>
                 </optional>
             </interleave>
