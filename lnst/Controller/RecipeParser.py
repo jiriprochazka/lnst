@@ -274,22 +274,12 @@ class RecipeParser(XmlParser):
         return options
 
     def _process_netem(self, netem_tag):
-        netem = XmlData(netem_tag)
-        if netem_tag is not None and len(netem_tag) > 0:
-            for option_tag in netem_tag:
-                if option_tag.tag == "delay":
-                    print "Delay tag found!"
-                elif option_tag.tag == "loss":
-                    print "Loss tag found!"
-                elif option_tag.tag == "duplication":
-                    print "Duplication tag found!"
-                elif option_tag.tag == "corruption":
-                    print "Corruption tag found!"
-                elif option_tag.tag == "reordering":
-                    print "Reordering tag found!"
-                else:
-                    msg = "Unknown netem option '%s'." % option_tag.tag
-                    raise RecipeError(msg, option_tag)
+        machine = XmlData(netem_tag)
+        # params
+        params_tag = netem_tag.find("params")
+        params = self._process_params(params_tag)
+        if len(params) > 0:
+            machine["params"] = params
 
     def _process_task(self, task_tag):
         task = XmlData(task_tag)
