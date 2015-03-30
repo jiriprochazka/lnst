@@ -112,8 +112,10 @@ class RecipeParser(XmlParser):
             iface["netns"] = self._get_attribute(iface_tag, "netns")
 
         # netem
+        iface["netem"] = None
         netem_tag = iface_tag.find("netem")
-        self._process_netem(netem_tag)
+        if netem_tag is not None:
+            iface["netem"] = self._process_netem(netem_tag)
 
         # params
         params_tag = iface_tag.find("params")
@@ -274,12 +276,16 @@ class RecipeParser(XmlParser):
         return options
 
     def _process_netem(self, netem_tag):
-        machine = XmlData(netem_tag)
+        interface = XmlData(netem_tag)
         # params
-        params_tag = netem_tag.find("params")
-        params = self._process_params(params_tag)
-        if len(params) > 0:
-            machine["params"] = params
+        for netem_op in ["delay", "loss", "duplication", "corrupt", "reordering"]:
+            netem_op_tag = netem_tag.find(netem_op)
+            if netem_op_tag is not None:
+                params_tag = netem_op_tag.find("params")
+                params = self._process_params(params_tag)
+                if len(params) > 0:
+                    interface[netem_op] = params
+        return interface
 
     def _process_task(self, task_tag):
         task = XmlData(task_tag)

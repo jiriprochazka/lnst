@@ -456,41 +456,41 @@
     <define name="netem">
         <element name="netem">
             <interleave>
-                <optional>
+                <zeroOrMore>
                     <element name="delay">
                         <zeroOrMore>
                             <ref name="params"/>
                         </zeroOrMore>
                     </element>
-                </optional>
-                <optional>
+                </zeroOrMore>
+                <zeroOrMore>
                     <element name="loss">
                         <zeroOrMore>
                             <ref name="params"/>
                         </zeroOrMore>
                     </element>
-                </optional>
-                <optional>
+                </zeroOrMore>
+                <zeroOrMore>
                     <element name="duplication">
                         <zeroOrMore>
                             <ref name="params"/>
                         </zeroOrMore>
                     </element>
-                </optional>
-                <optional>
-                    <element name="corruption">
+                </zeroOrMore>
+                <zeroOrMore>
+                    <element name="corrupt">
                         <zeroOrMore>
                             <ref name="params"/>
                         </zeroOrMore>
                     </element>
-                </optional>
-                <optional>
+                </zeroOrMore>
+                <zeroOrMore>
                     <element name="reordering">
                         <zeroOrMore>
                             <ref name="params"/>
                         </zeroOrMore>
                     </element>
-                </optional>
+                </zeroOrMore>
             </interleave>
         </element>
     </define>
