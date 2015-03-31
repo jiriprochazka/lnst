@@ -6,9 +6,9 @@
                     <netem>
                         <delay>
                             <params>
-                                <param name="time" value="100ms" />
+                                <param name="time" value="50ms" />
                                 <param name="jitter" value="10ms" />
-                                <param name="correlation" value="25%" />
+                                <param name="correlation" value="50%" />
                                 <param name="distribution" value="normal" />
                             </params>
                         </delay>
@@ -24,6 +24,12 @@
                                 <param name="correlation" value="25%" />
                             </params>
                         </reordering>
+                        <loss>
+                            <params>
+                                <param name="percent" value="45%" />
+                                <param name="correlation" value="15%" />
+                            </params>
+                        </loss>
                     </netem>
                     <addresses>
                         <address>192.168.101.10/24</address>
