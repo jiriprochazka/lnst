@@ -459,35 +459,35 @@
                 <zeroOrMore>
                     <element name="delay">
                         <zeroOrMore>
-                            <ref name="params"/>
+                            <ref name="options"/>
                         </zeroOrMore>
                     </element>
                 </zeroOrMore>
                 <zeroOrMore>
                     <element name="loss">
                         <zeroOrMore>
-                            <ref name="params"/>
+                            <ref name="options"/>
                         </zeroOrMore>
                     </element>
                 </zeroOrMore>
                 <zeroOrMore>
                     <element name="duplication">
                         <zeroOrMore>
-                            <ref name="params"/>
+                            <ref name="options"/>
                         </zeroOrMore>
                     </element>
                 </zeroOrMore>
                 <zeroOrMore>
                     <element name="corrupt">
                         <zeroOrMore>
-                            <ref name="params"/>
+                            <ref name="options"/>
                         </zeroOrMore>
                     </element>
                 </zeroOrMore>
                 <zeroOrMore>
                     <element name="reordering">
                         <zeroOrMore>
-                            <ref name="params"/>
+                            <ref name="options"/>
                         </zeroOrMore>
                     </element>
                 </zeroOrMore>

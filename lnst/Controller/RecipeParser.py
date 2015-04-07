@@ -281,10 +281,10 @@ class RecipeParser(XmlParser):
         for netem_op in ["delay", "loss", "duplication", "corrupt", "reordering"]:
             netem_op_tag = netem_tag.find(netem_op)
             if netem_op_tag is not None:
-                params_tag = netem_op_tag.find("params")
-                params = self._process_params(params_tag)
-                if len(params) > 0:
-                    interface[netem_op] = params
+                options_tag = netem_op_tag.find("options")
+                options = self._process_options(options_tag)
+                if len(options) > 0:
+                    interface[netem_op] = options
         return interface
 
     def _process_task(self, task_tag):
