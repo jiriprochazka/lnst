@@ -5,30 +5,30 @@
                 <eth id="testiface" label="testnet">
                     <netem>
                         <delay>
-                            <params>
-                                <param name="time" value="50ms" />
-                                <param name="jitter" value="10ms" />
-                                <param name="correlation" value="50%" />
-                                <param name="distribution" value="normal" />
-                            </params>
+                            <options>
+                                <option name="time" value="50ms" />
+                                <option name="jitter" value="10ms" />
+                                <option name="correlation" value="50%" />
+                                <option name="distribution" value="normal" />
+                            </options>
                         </delay>
                         <corrupt>
-                            <params>
-                                <param name="percent" value="10%" />
-                                <param name="correlation" value="25%" />
-                            </params>
+                            <options>
+                                <option name="percent" value="10%" />
+                                <option name="correlation" value="25%" />
+                            </options>
                         </corrupt>
                         <reordering>
-                            <params>
-                                <param name="percent" value="10%" />
-                                <param name="correlation" value="25%" />
-                            </params>
+                            <options>
+                                <option name="percent" value="10%" />
+                                <option name="correlation" value="25%" />
+                            </options>
                         </reordering>
                         <loss>
-                            <params>
-                                <param name="percent" value="45%" />
-                                <param name="correlation" value="15%" />
-                            </params>
+                            <options>
+                                <option name="percent" value="45%" />
+                                <option name="correlation" value="15%" />
+                            </options>
                         </loss>
                     </netem>
                     <addresses>
@@ -45,16 +45,16 @@
                     </addresses>
                     <netem>
                         <loss>
-                            <params>
-                                <param name="percent" value="15%" />
-                                <param name="correlation" value="15%" />
-                            </params>
+                            <options>
+                                <option name="percent" value="15%" />
+                                <option name="correlation" value="15%" />
+                            </options>
                         </loss>
                         <duplication>
-                            <params>
-                                <param name="percent" value="10%" />
-                                <param name="correlation" value="25%" />
-                            </params>
+                            <options>
+                                <option name="percent" value="10%" />
+                                <option name="correlation" value="25%" />
+                            </options>
                         </duplication>
                     </netem>
                 </eth>
