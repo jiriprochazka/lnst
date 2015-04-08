@@ -282,7 +282,7 @@ class RecipeParser(XmlParser):
             netem_op_tag = netem_tag.find(netem_op)
             if netem_op_tag is not None:
                 options_tag = netem_op_tag.find("options")
-                options = self._process_options(options_tag)
+                options = self._proces_options(options_tag)
                 if len(options) > 0:
                     interface[netem_op] = options
         return interface
