@@ -35,3 +35,14 @@ def get_slave_option(netdev, slave_id, opt_name):
         if option == opt_name:
             return value
     return None
+
+def get_netem_option(netem_tag, netem_name, opt_name):
+    try:
+        options = netem_tag[netem_name]
+    except KeyError:
+        return None
+    for opt in options:
+        if opt["name"] == opt_name:
+            return opt["value"]
+    return None
+
