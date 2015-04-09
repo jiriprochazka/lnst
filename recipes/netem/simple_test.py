@@ -9,7 +9,7 @@ hostB.sync_resources(modules=["IcmpPing"])
 ping_mod = ctl.get_module("IcmpPing",
                            options={
                               "addr": hostB.get_ip("testiface", 0),
-                              "count": 10,
+                              "count": 100,
                               "interval": 0.2,
                               "iface" : hostA.get_devname("testiface"),
                               "limit_rate": 90})
