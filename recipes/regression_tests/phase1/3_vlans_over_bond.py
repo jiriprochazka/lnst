@@ -19,6 +19,13 @@ offloads = ["gso", "gro", "tso"]
 
 ipv = ctl.get_alias('ipv')
 
+
+# ------
+# MTU set
+# ------
+m1.run("ip link set dev %s mtu 8000" % m1.get_devname("test_bond"))
+m2.run("ip link set dev %s mtu 8000" % m2.get_devname("eth1"))
+
 for vlan1 in vlans:
     for vlan2 in vlans:
         ping_mod = ctl.get_module("IcmpPing",

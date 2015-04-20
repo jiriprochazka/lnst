@@ -11,6 +11,12 @@ m1.sync_resources(modules=["IcmpPing", "Icmp6Ping", "Netperf"])
 m2.sync_resources(modules=["IcmpPing", "Icmp6Ping", "Netperf"])
 
 # ------
+# MTU
+# ------
+m1.run("ip link set dev %s mtu 8000" % m1.get_devname("test_if"))
+m2.run("ip link set dev %s mtu 8000" % m2.get_devname("test_if"))
+
+# ------
 # TESTS
 # ------
 

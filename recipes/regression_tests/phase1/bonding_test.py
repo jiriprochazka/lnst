@@ -19,6 +19,12 @@ offloads = ["tso", "gro", "gso"]
 
 ipv = ctl.get_alias('ipv')
 
+# ------
+# MTU set
+# ------
+m1.run("ip link set dev %s mtu 8000" % m1.get_devname("test_if"))
+m2.run("ip link set dev %s mtu 8000" % m2.get_devname("test_if"))
+
 ping_mod = ctl.get_module("IcmpPing",
                            options={
                                "addr" : m2.get_ip("test_if", 0),
