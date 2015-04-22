@@ -75,7 +75,7 @@ for vlan1 in vlans:
                                               "duration" : 60,
                                               "testname" : "UDP_STREAM",
                                               "netperf_opts" :
-                                                  "-L %s" % m2.get_ip(vlan1)
+                                                  "-L %s -- -m 8000" % m2.get_ip(vlan1)
                                           })
 
         netperf_cli_tcp6 = ctl.get_module("Netperf",

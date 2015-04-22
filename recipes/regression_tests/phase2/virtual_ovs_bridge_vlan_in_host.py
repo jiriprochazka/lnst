@@ -65,7 +65,7 @@ netperf_cli_udp = ctl.get_module("Netperf",
                                       "netperf_server" : g1.get_ip("guestnic"),
                                       "duration" : 60,
                                       "testname" : "UDP_STREAM",
-                                      "netperf_opts" : "-L %s" %
+                                      "netperf_opts" : "-L %s -- -m 8000" %
                                                             h2.get_ip("vlan10")
                                   })
 
