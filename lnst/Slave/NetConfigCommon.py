@@ -44,5 +44,3 @@ def get_netem_option(netem_tag, netem_name, opt_name):
     for opt in options:
         if opt["name"] == opt_name:
             return opt["value"]
-    return None
-
