@@ -456,41 +456,41 @@
     <define name="netem">
         <element name="netem">
             <interleave>
-                <zeroOrMore>
+                <optional>
                     <element name="delay">
-                        <zeroOrMore>
+                        <optional>
                             <ref name="options"/>
-                        </zeroOrMore>
+                        </optional>
                     </element>
-                </zeroOrMore>
-                <zeroOrMore>
+                </optional>
+                <optional>
                     <element name="loss">
-                        <zeroOrMore>
+                        <optional>
                             <ref name="options"/>
-                        </zeroOrMore>
+                        </optional>
                     </element>
-                </zeroOrMore>
-                <zeroOrMore>
+                </optional>
+                <optional>
                     <element name="duplication">
-                        <zeroOrMore>
+                        <optional>
                             <ref name="options"/>
-                        </zeroOrMore>
+                        </optional>
                     </element>
-                </zeroOrMore>
-                <zeroOrMore>
+                </optional>
+                <optional>
                     <element name="corrupt">
-                        <zeroOrMore>
+                        <optional>
                             <ref name="options"/>
-                        </zeroOrMore>
+                        </optional>
                     </element>
-                </zeroOrMore>
-                <zeroOrMore>
+                </optional>
+                <optional>
                     <element name="reordering">
-                        <zeroOrMore>
+                        <optional>
                             <ref name="options"/>
-                        </zeroOrMore>
+                        </optional>
                     </element>
-                </zeroOrMore>
+                </optional>
             </interleave>
         </element>
     </define>
