@@ -86,14 +86,14 @@ class NetConfigDeviceEth(NetConfigDeviceGeneric):
         config = self._dev_config
         exec_cmd("ip addr flush %s" % config["name"])
         exec_cmd("ethtool -A %s rx off tx off" % config["name"], die_on_err=False, log_outputs=False)
-    if config["netem"] is not None:
+        if config["netem"] is not None:
             cmd = "tc qdisc add dev %s root netem %s" % (config["name"], self.parse_netem(config["netem"]))
             exec_cmd(cmd)
             config["netem_cmd"] = cmd
 
     def deconfigure(self):
         config = self._dev_config
-    if config["netem_cmd"] is not None:
+        if config["netem_cmd"] is not None:
             exec_cmd(config["netem_cmd"].replace("add", "del"))
 
     def parse_netem(self, config):
