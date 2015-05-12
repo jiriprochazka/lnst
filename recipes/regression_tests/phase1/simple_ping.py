@@ -6,6 +6,12 @@ hostB = ctl.get_host("machine2")
 hostA.sync_resources(modules=["Icmp6Ping", "IcmpPing"])
 hostB.sync_resources(modules=["Icmp6Ping", "IcmpPing"])
 
+# ------
+# MTU set
+# ------
+hostA.run("ip link set dev %s mtu 8000" % hostA.get_devname("testiface"))
+hostB.run("ip link set dev %s mtu 8000" % hostB.get_devname("testiface"))
+
 ping_mod = ctl.get_module("IcmpPing",
                            options={
                               "addr": hostB.get_ip("testiface", 0),

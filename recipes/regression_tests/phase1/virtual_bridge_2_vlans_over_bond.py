@@ -5,14 +5,14 @@ from lnst.Controller.Task import ctl
 # ------
 
 # Host 1 + guests 1 and 2
-#h1 = ctl.get_host("host1")
+h1 = ctl.get_host("host1")
 g1 = ctl.get_host("guest1")
 g1.sync_resources(modules=["IcmpPing", "Icmp6Ping", "Netperf"])
 g2 = ctl.get_host("guest2")
 g2.sync_resources(modules=["IcmpPing", "Icmp6Ping", "Netperf"])
 
 # Host 2 + guests 3 and 4
-#h2 = ctl.get_host("host2")
+h2 = ctl.get_host("host2")
 g3 = ctl.get_host("guest3")
 g3.sync_resources(modules=["IcmpPing", "Icmp6Ping", "Netperf"])
 g4 = ctl.get_host("guest4")
@@ -146,6 +146,14 @@ ping_mod6_bad2 = ctl.get_module("Icmp6Ping",
 
 for offload in offloads:
     for state in ["on", "off"]:
+        h1.run("ethtool -K %s %s %s" % (h1.get_devname("nic1"),
+                                        offload, state))
+        h1.run("ethtool -K %s %s %s" % (h1.get_devname("nic2"),
+                                        offload, state))
+        h2.run("ethtool -K %s %s %s" % (h2.get_devname("nic1"),
+                                        offload, state))
+        h2.run("ethtool -K %s %s %s" % (h2.get_devname("nic2"),
+                                        offload, state))
         g1.run("ethtool -K %s %s %s" % (g1.get_devname("guestnic"),
                                         offload, state))
         g2.run("ethtool -K %s %s %s" % (g2.get_devname("guestnic"),
@@ -160,10 +168,10 @@ for offload in offloads:
             g1.run(ping_mod_bad, expect="fail")
             g3.run(ping_mod_bad2, expect="fail")
 
-            server_proc = g1.run(netperf_srv, bg=True, timeout=125)
+            server_proc = g1.run(netperf_srv, bg=True)
             ctl.wait(2)
-            g3.run(netperf_cli_tcp, timeout=65)
-            g3.run(netperf_cli_udp, timeout=65)
+            g3.run(netperf_cli_tcp, timeout=70)
+            g3.run(netperf_cli_udp, timeout=70)
             server_proc.intr()
         elif ipv == 'ipv6':
             g1.run(ping_mod6)
@@ -171,10 +179,10 @@ for offload in offloads:
             g1.run(ping_mod6_bad, expect="fail")
             g3.run(ping_mod6_bad2, expect="fail")
 
-            server_proc = g1.run(netperf_srv6, bg=True, timeout=125)
+            server_proc = g1.run(netperf_srv6, bg=True)
             ctl.wait(2)
-            g3.run(netperf_cli_tcp6, timeout=65)
-            g3.run(netperf_cli_udp6, timeout=65)
+            g3.run(netperf_cli_tcp6, timeout=70)
+            g3.run(netperf_cli_udp6, timeout=70)
             server_proc.intr()
         else:
             # IPv4
@@ -183,10 +191,10 @@ for offload in offloads:
             g1.run(ping_mod_bad, expect="fail")
             g3.run(ping_mod_bad2, expect="fail")
 
-            server_proc = g1.run(netperf_srv, bg=True, timeout=125)
+            server_proc = g1.run(netperf_srv, bg=True)
             ctl.wait(2)
-            g3.run(netperf_cli_tcp, timeout=65)
-            g3.run(netperf_cli_udp, timeout=65)
+            g3.run(netperf_cli_tcp, timeout=70)
+            g3.run(netperf_cli_udp, timeout=70)
             server_proc.intr()
             # IPv6
             g1.run(ping_mod6)
@@ -194,8 +202,8 @@ for offload in offloads:
             g1.run(ping_mod6_bad, expect="fail")
             g3.run(ping_mod6_bad2, expect="fail")
 
-            server_proc = g1.run(netperf_srv6, bg=True, timeout=125)
+            server_proc = g1.run(netperf_srv6, bg=True)
             ctl.wait(2)
-            g3.run(netperf_cli_tcp6, timeout=65)
-            g3.run(netperf_cli_udp6, timeout=65)
+            g3.run(netperf_cli_tcp6, timeout=70)
+            g3.run(netperf_cli_udp6, timeout=70)
             server_proc.intr()

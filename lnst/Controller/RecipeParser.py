@@ -147,7 +147,7 @@ class RecipeParser(XmlParser):
 
                     # slave options
                     opts_tag = slave_tag.find("options")
-                    opts = self._proces_options(opts_tag)
+                    opts = self._process_options(opts_tag)
                     if len(opts) > 0:
                         slave["options"] = opts
 
@@ -155,13 +155,13 @@ class RecipeParser(XmlParser):
 
             # interface options
             opts_tag = iface_tag.find("options")
-            opts = self._proces_options(opts_tag)
+            opts = self._process_options(opts_tag)
             if len(opts) > 0:
                 iface["options"] = opts
         elif iface["type"] in ["vti"]:
             # interface options
             opts_tag = iface_tag.find("options")
-            opts = self._proces_options(opts_tag)
+            opts = self._process_options(opts_tag)
             iface["options"] = opts
         elif iface["type"] in ["vlan"]:
             # real_dev of the VLAN interface
@@ -181,7 +181,7 @@ class RecipeParser(XmlParser):
 
             # interface options
             opts_tag = iface_tag.find("options")
-            opts = self._proces_options(opts_tag)
+            opts = self._process_options(opts_tag)
             if len(opts) > 0:
                 iface["options"] = opts
         elif iface["type"] == "ovs_bridge":
@@ -255,13 +255,13 @@ class RecipeParser(XmlParser):
                     bond_slaves.append(slave_id)
 
                 opts_tag = bond_tag.find("options")
-                opts = self._proces_options(opts_tag)
+                opts = self._process_options(opts_tag)
                 if len(opts) > 0:
                     bonds[bond_id]["options"] = opts
 
         return [iface]
 
-    def _proces_options(self, opts_tag):
+    def _process_options(self, opts_tag):
         options = XmlCollection(opts_tag)
         if opts_tag is not None:
             for opt_tag in opts_tag:
@@ -354,7 +354,7 @@ class RecipeParser(XmlParser):
 
             # options
             opts_tag = cmd_tag.find("options")
-            opts = self._proces_options(opts_tag)
+            opts = self._process_options(opts_tag)
             if len(opts) > 0:
                 cmd["options"] = opts
         elif has_command:
@@ -402,7 +402,7 @@ class RecipeParser(XmlParser):
         else:
             # options
             opts_tag = cmd_tag.find("options")
-            opts = self._proces_options(opts_tag)
+            opts = self._process_options(opts_tag)
             if len(opts) > 0:
                 cmd["options"] = opts
 

@@ -19,6 +19,12 @@ offloads = ["tso", "gro", "gso"]
 
 ipv = ctl.get_alias('ipv')
 
+# ------
+# MTU set
+# ------
+m1.run("ip link set dev %s mtu 8000" % m1.get_devname("test_if"))
+m2.run("ip link set dev %s mtu 8000" % m2.get_devname("test_if"))
+
 ping_mod = ctl.get_module("IcmpPing",
                            options={
                                "addr" : m2.get_ip("test_if", 0),
@@ -97,26 +103,26 @@ for offload in offloads:
             m1.run(ping_mod)
             server_proc = m1.run(netperf_srv, bg=True)
             ctl.wait(2)
-            m2.run(netperf_cli_tcp, timeout=65)
-            m2.run(netperf_cli_udp, timeout=65)
+            m2.run(netperf_cli_tcp, timeout=70)
+            m2.run(netperf_cli_udp, timeout=70)
             server_proc.intr()
         elif ipv == 'ipv6':
             m1.run(ping_mod6)
             server_proc = m1.run(netperf_srv6, bg=True)
             ctl.wait(2)
-            m2.run(netperf_cli_tcp6, timeout=65)
-            m2.run(netperf_cli_udp6, timeout=65)
+            m2.run(netperf_cli_tcp6, timeout=70)
+            m2.run(netperf_cli_udp6, timeout=70)
             server_proc.intr()
         else:
             m1.run(ping_mod)
             m1.run(ping_mod6)
             server_proc = m1.run(netperf_srv, bg=True)
             ctl.wait(2)
-            m2.run(netperf_cli_tcp, timeout=65)
-            m2.run(netperf_cli_udp, timeout=65)
+            m2.run(netperf_cli_tcp, timeout=70)
+            m2.run(netperf_cli_udp, timeout=70)
             server_proc.intr()
             server_proc = m1.run(netperf_srv6, bg=True)
             ctl.wait(2)
-            m2.run(netperf_cli_tcp6, timeout=65)
-            m2.run(netperf_cli_udp6, timeout=65)
+            m2.run(netperf_cli_tcp6, timeout=70)
+            m2.run(netperf_cli_udp6, timeout=70)
             server_proc.intr()

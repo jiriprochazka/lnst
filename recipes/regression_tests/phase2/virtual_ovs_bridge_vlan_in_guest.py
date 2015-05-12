@@ -94,6 +94,8 @@ netperf_cli_udp6 = ctl.get_module("Netperf",
 
 for offload in offloads:
     for state in ["on", "off"]:
+        h1.run("ethtool -K %s %s %s" % (h1.get_devname("nic"),
+                                        offload, state))
         g1.run("ethtool -K %s %s %s" % (g1.get_devname("guestnic"),
                                         offload, state))
         h2.run("ethtool -K %s %s %s" % (h2.get_devname("nic"),
@@ -102,29 +104,29 @@ for offload in offloads:
             g1.run(ping_mod)
             server_proc = g1.run(netperf_srv, bg=True)
             ctl.wait(2)
-            h2.run(netperf_cli_tcp, timeout=65)
-            h2.run(netperf_cli_udp, timeout=65)
+            h2.run(netperf_cli_tcp, timeout=70)
+            h2.run(netperf_cli_udp, timeout=70)
 
             server_proc.intr()
         elif ipv == 'ipv6':
             g1.run(ping_mod6)
             server_proc = g1.run(netperf_srv6, bg=True)
             ctl.wait(2)
-            h2.run(netperf_cli_tcp6, timeout=65)
-            h2.run(netperf_cli_udp6, timeout=65)
+            h2.run(netperf_cli_tcp6, timeout=70)
+            h2.run(netperf_cli_udp6, timeout=70)
 
             server_proc.intr()
         else:
             g1.run(ping_mod)
             server_proc = g1.run(netperf_srv, bg=True)
             ctl.wait(2)
-            h2.run(netperf_cli_tcp, timeout=65)
-            h2.run(netperf_cli_udp, timeout=65)
+            h2.run(netperf_cli_tcp, timeout=70)
+            h2.run(netperf_cli_udp, timeout=70)
             server_proc.intr()
 
             g1.run(ping_mod6)
             server_proc = g1.run(netperf_srv6, bg=True)
             ctl.wait(2)
-            h2.run(netperf_cli_tcp6, timeout=65)
-            h2.run(netperf_cli_udp6, timeout=65)
+            h2.run(netperf_cli_tcp6, timeout=70)
+            h2.run(netperf_cli_udp6, timeout=70)
             server_proc.intr()

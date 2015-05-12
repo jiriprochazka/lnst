@@ -18,6 +18,7 @@ import tempfile
 import subprocess
 import errno
 import ast
+import collections
 from _ast import Call, Attribute
 from lnst.Common.ExecCmd import exec_cmd
 
@@ -111,12 +112,12 @@ def create_tar_archive(input_path, target_path, compression=False):
     else:
         args = "cf"
 
-    if os.path.isdir(target_path):
-        target_path += "/%s.tar.bz" % os.path.basename(input_file.rstrip("/"))
-
     input_path = input_path.rstrip("/")
     input_file = os.path.basename(input_path)
     parent = os.path.dirname(input_path)
+
+    if os.path.isdir(target_path):
+        target_path += "/%s.tar.bz" % os.path.basename(input_file.rstrip("/"))
 
     exec_cmd("cd \"%s\" && tar %s \"%s\" \"%s\"" % \
                 (parent, args, target_path, input_file))
@@ -138,7 +139,7 @@ def has_changed_since(filepath, threshold):
     if os.path.isfile(filepath):
         return _is_newer_than(filepath, threshold)
 
-    for root, dirs, files in os.walk(directory):
+    for root, dirs, files in os.walk(filepath):
         for f in files:
             if _is_newer_than(f, threshold):
                 return False
@@ -192,3 +193,54 @@ def get_module_tools(module_path):
     f.close()
 
     return tools
+
+def recursive_dict_update(original, update):
+    for key, value in update.iteritems():
+        if isinstance(value, collections.Mapping):
+            r = recursive_dict_update(original.get(key, {}), value)
+            original[key] = r
+        else:
+            original[key] = update[key]
+    return original
+
+def dot_to_dict(name, value):
+    result = {}
+    last = result
+    last_key = None
+    previous = None
+    for key in name.split('.'):
+        last[key] = {}
+        previous = last
+        last = last[key]
+        last_key = key
+    if last_key != None:
+        previous[last_key] = value
+    return result
+
+def list_to_dot(original_list, prefix="", key=""):
+    return_list = []
+    index = 0
+    for value in original_list:
+        iter_key = prefix + key + str(index)
+        index += 1
+        if isinstance(value, collections.Mapping):
+            sub_list = dict_to_dot(value, iter_key + '.')
+            return_list.extend(sub_list)
+        elif isinstance(value, list):
+            raise Exception("Nested lists not allowed")
+        else:
+            return_list.append((iter_key, value))
+    return return_list
+
+def dict_to_dot(original_dict, prefix=""):
+    return_list = []
+    for key, value in original_dict.iteritems():
+        if isinstance(value, collections.Mapping):
+            sub_list = dict_to_dot(value, prefix + key + '.')
+            return_list.extend(sub_list)
+        elif isinstance(value, list):
+            sub_list = list_to_dot(value, prefix, key)
+            return_list.extend(sub_list)
+        else:
+            return_list.append((prefix+key, str(value)))
+    return return_list

@@ -184,7 +184,7 @@ class Machine(object):
         if hello != "hello":
             msg = "Unable to establish RPC connection " \
                   "to machine %s, handshake failed!" % hostname
-            raise Machine(msg)
+            raise MachineError(msg)
 
         for iface in self._interfaces:
             iface.initialize()
@@ -557,7 +557,7 @@ class Interface(object):
     def add_master(self, master, primary=True):
         if primary and self._master["primary"] != None:
             msg = "Interface %s already has a primary master."\
-                    % self._master.get_id()
+                    % self.get_id()
             raise MachineError(msg)
         else:
             if primary:
@@ -954,6 +954,9 @@ class UnusedInterface(Interface):
 
     def initialize(self):
         self._machine._rpc_call('set_unmapped_device_down', self._hwaddr)
+
+    def set_driver(self, driver):
+        pass
 
     def configure(self):
         pass
