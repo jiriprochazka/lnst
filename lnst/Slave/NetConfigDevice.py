@@ -170,19 +170,19 @@ class NetConfigDeviceEth(NetConfigDeviceGeneric):
         rv = ""
         # delay parsing
         if "delay" in config:
-            rv = rv + parse_delay(config)
+            rv = rv + self.parse_delay(config)
         # loss parsing
         if "loss" in config:
-            rv = rv + parse_loss(config)
+            rv = rv + self.parse_loss(config)
         # corrupt
         if "corrupt" in config:
-            rv = rv + parse_corrupt(config)
+            rv = rv + self.parse_corrupt(config)
         # duplication
         if "duplication" in config:
-            rv = rv + parse_duplication(config)
+            rv = rv + self.parse_duplication(config)
         # reordering
         if "reordering" in config:
-            rv = rv + parse_reordering(config)
+            rv = rv + self.parse_reordering(config)
         return rv
 
 class NetConfigDeviceLoopback(NetConfigDeviceGeneric):
