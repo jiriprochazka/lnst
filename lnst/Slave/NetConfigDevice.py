@@ -96,19 +96,19 @@ class NetConfigDeviceEth(NetConfigDeviceGeneric):
         if config["netem_cmd"] is not None:
             exec_cmd(config["netem_cmd"].replace("add", "del"))
 
-    def parse_delay
+    def parse_delay:
         pass
 
-    def parse_loss
+    def parse_loss:
         pass
 
-    def parse_corrupt
+    def parse_corrupt:
         pass
 
-    def parse_duplication
+    def parse_duplication:
         pass
 
-    def parse_reordering
+    def parse_reordering:
         pass
 
     def parse_netem(self, config):
