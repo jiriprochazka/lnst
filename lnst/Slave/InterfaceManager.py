@@ -132,7 +132,7 @@ class InterfaceManager(object):
         elif if_id in self._tmp_mapping:
             return self._tmp_mapping[if_id]
         else:
-            raise IfMgrError("No device with id %s mapped." % if_id)
+            return None
 
     def get_mapped_devices(self):
         ret = {}
@@ -228,7 +228,7 @@ class InterfaceManager(object):
             if (not "hwaddr" in config or
                 "name" in config):
                 return
-            hwaddr = normalize_hwaddr(netdev["hwaddr"])
+            hwaddr = normalize_hwaddr(config["hwaddr"])
             for dev in self._devices:
                 if dev.get_hwaddr() == hwaddr:
                     return dev.get_name()
