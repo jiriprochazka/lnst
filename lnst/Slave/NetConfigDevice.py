@@ -96,91 +96,93 @@ class NetConfigDeviceEth(NetConfigDeviceGeneric):
         if config["netem_cmd"] is not None:
             exec_cmd(config["netem_cmd"].replace("add", "del"))
 
-    def parse_delay(self):
-        pass
+    def parse_delay(self, config):
+        time = get_netem_option(config, "delay", "time")
+        jitter= get_netem_option(config, "delay", "jitter")
+        correlation = get_netem_option(config, "delay", "correlation")
+        distribution = get_netem_option(config, "delay", "distribution")
+        # time is mandatory
+        if time is None:
+            raise Exception("DELAY: Time is mandatory")
+        # correlation or distribution can be set only when jitter is set
+        if jitter is None and (correlation is not None or distribution is not None):
+            raise Exception("DELAY: Correlation or distribution can be set only when jitter is set")
+        rv = "delay %s " % time
+        if jitter is not None:
+            rv = rv + "%s " % jitter
+            if correlation is not None:
+                rv = rv + "%s " % correlation
+            if distribution is not None:
+                if distribution not in ["normal", "uniform", "pareto", "paretonormal"]:
+                    raise Exception("DELAY: Attribute distribution has invalid value.")
+                else:
+                    rv = rv + "distribution %s " % distribution
+        return rv
 
-    def parse_loss(self):
-        pass
+    def parse_loss(self, config):
+        percent = get_netem_option(config, "loss", "percent")
+        correlation = get_netem_option(config, "loss", "correlation")
+        # percent is mandatory
+        if percent is None:
+            raise Exception("LOSS: Percent is mandatory")
+        rv = "loss %s " % percent
+        if correlation is not None:
+            rv = rv + "%s " % correlation
+        return rv
 
-    def parse_corrupt(self):
-        pass
+    def parse_corrupt(self, config):
+        percent = get_netem_option(config, "corrupt", "percent")
+        correlation = get_netem_option(config, "corrupt", "correlation")
+        # percent is mandatory
+        if percent is None:
+            raise Exception("CORRUPT: Percent is mandatory")
+        rv = "corrupt %s " % percent
+        if correlation is not None:
+            rv = rv + "%s " % correlation
+        return rv
 
-    def parse_duplication(self):
-        pass
+    def parse_duplication(self, config):
+        percent = get_netem_option(config, "duplication", "percent")
+        correlation = get_netem_option(config, "duplication", "correlation")
+        # percent is mandatory
+        if percent is None:
+            raise Exception("DUPLICATE: Percent is mandatory")
+        rv = "duplicate %s " % percent
+        if correlation is not None:
+            rv = rv + "%s " % correlation
+        return rv
 
-    def parse_reordering(self):
-        pass
+    def parse_reordering(self, config):
+        percent = get_netem_option(config, "reordering", "percent")
+        correlation = get_netem_option(config, "reordering", "correlation")
+        gap_distance = get_netem_option(config, "reordering", "gap_distance")
+        # percent is mandatory
+        if percent is None:
+            raise Exception("REORDER: Percent is mandatory")
+        rv = "reorder %s " % percent
+        if correlation is not None:
+            rv = rv + "%s " % correlation
+        if gap_distance is not None:
+            rv = rv + "gap %s " % gap_distance
+        return rv
 
     def parse_netem(self, config):
         rv = ""
         # delay parsing
         if "delay" in config:
-            time = get_netem_option(config, "delay", "time")
-            jitter= get_netem_option(config, "delay", "jitter")
-            correlation = get_netem_option(config, "delay", "correlation")
-            distribution = get_netem_option(config, "delay", "distribution")
-            # time is mandatory
-            if time is None:
-                raise Exception("DELAY: Time is mandatory")
-            # correlation or distribution can be set only when jitter is set
-            if jitter is None and (correlation is not None or distribution is not None):
-                raise Exception("DELAY: Correlation or distribution can be set only when jitter is set")
-            rv = rv + "delay %s " % time
-            if jitter is not None:
-                rv = rv + "%s " % jitter
-                if correlation is not None:
-                    rv = rv + "%s " % correlation
-                if distribution is not None:
-                    if distribution not in ["normal", "uniform", "pareto", "paretonormal"]:
-                        raise Exception("DELAY: Attribute distribution has invalid value.")
-                    else:
-                        rv = rv + "distribution %s " % distribution
+            rv = rv + parse_delay(config)
         # loss parsing
         if "loss" in config:
-            percent = get_netem_option(config, "loss", "percent")
-            correlation = get_netem_option(config, "loss", "correlation")
-            # percent is mandatory
-            if percent is None:
-                raise Exception("LOSS: Percent is mandatory")
-            rv = rv + "loss %s " % percent
-            if correlation is not None:
-                rv = rv + "%s " % correlation
-
+            rv = rv + parse_loss(config)
         # corrupt
         if "corrupt" in config:
-            percent = get_netem_option(config, "corrupt", "percent")
-            correlation = get_netem_option(config, "corrupt", "correlation")
-            # percent is mandatory
-            if percent is None:
-                raise Exception("CORRUPT: Percent is mandatory")
-            rv = rv + "corrupt %s " % percent
-            if correlation is not None:
-                rv = rv + "%s " % correlation
-
+            rv = rv + parse_corrupt(config)
         # duplication
         if "duplication" in config:
-            percent = get_netem_option(config, "duplication", "percent")
-            correlation = get_netem_option(config, "duplication", "correlation")
-            # percent is mandatory
-            if percent is None:
-                raise Exception("DUPLICATE: Percent is mandatory")
-            rv = rv + "duplicate %s " % percent
-            if correlation is not None:
-                rv = rv + "%s " % correlation
-
+            rv = rv + parse_duplication(config)
         # reordering
         if "reordering" in config:
-            percent = get_netem_option(config, "reordering", "percent")
-            correlation = get_netem_option(config, "reordering", "correlation")
-            gap_distance = get_netem_option(config, "reordering", "gap_distance")
-            # percent is mandatory
-            if percent is None:
-                raise Exception("REORDER: Percent is mandatory")
-            rv = rv + "reorder %s " % percent
-            if correlation is not None:
-                rv = rv + "%s " % correlation
-            if gap_distance is not None:
-                rv = rv + "gap %s " % gap_distance
+            rv = rv + parse_reordering(config)
         return rv
 
 class NetConfigDeviceLoopback(NetConfigDeviceGeneric):
