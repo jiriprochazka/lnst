@@ -112,7 +112,6 @@ class RecipeParser(XmlParser):
             iface["netns"] = self._get_attribute(iface_tag, "netns")
 
         # netem
-        iface["netem"] = None
         netem_tag = iface_tag.find("netem")
         if netem_tag is not None:
             iface["netem"] = self._process_netem(netem_tag)
@@ -275,6 +274,51 @@ class RecipeParser(XmlParser):
 
         return options
 
+    def _validate_netem(self, options, netem_op, netem_tag):
+        if netem_op == "delay":
+            valid = False
+            jitter = False
+            correlation = False
+            distribution = False
+            valid_distributions = ["normal", "uniform", "pareto", "paretonormal"]
+            for opt in options:
+                if "time" in opt.values():
+                    valid = True
+                elif "distribution" in opt.values():
+                    if opt["value"] not in valid_distributions:
+                        raise RecipeError("netem: invalid distribution type", netem_tag)
+                    else:
+                        distribution = True
+                elif "jitter" in opt.values():
+                    jitter =  True
+                elif "correlation" in opt.values():
+                    correlation = True
+            if not jitter:
+                if correlation or distribution:
+                    raise RecipeError("netem: jitter option is mandatory when using <correlation> or <distribution>", netem_tag)
+            if not valid:
+                raise RecipeError("netem: time option is mandatory for <delay>", netem_tag)
+        elif netem_op == "loss":
+            for opt in options:
+                if "percent" in opt.values():
+                    return
+            raise RecipeError("netem: percent option is mandatory for <loss>", netem_tag)
+        elif netem_op == "duplication":
+            for opt in options:
+                if "percent" in opt.values():
+                    return
+            raise RecipeError("netem: percent option is mandatory for <duplication>", netem_tag)
+        elif netem_op == "corrupt":
+            for opt in options:
+                if "percent" in opt.values():
+                    return
+            raise RecipeError("netem: percent option is mandatory for <corrupt>", netem_tag)
+        elif netem_op == "reordering":
+            for opt in options:
+                if "percent" in opt.values():
+                    return
+            raise RecipeError("netem: percent option is mandatory for <reordering>", netem_tag)
+
     def _process_netem(self, netem_tag):
         interface = XmlData(netem_tag)
         # params
@@ -284,6 +328,7 @@ class RecipeParser(XmlParser):
                 options_tag = netem_op_tag.find("options")
                 options = self._process_options(options_tag)
                 if len(options) > 0:
+                    self._validate_netem(options, netem_op, netem_tag)
                     interface[netem_op] = options
         return interface
 
