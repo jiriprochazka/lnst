@@ -24,7 +24,13 @@ ipv = ctl.get_alias('ipv')
 # MTU set
 # ------
 m1.run("ip link set dev %s mtu 8000" % m1.get_devname("test_bond"))
+m1.run("ip link set dev %s mtu 8000" % m1.get_devname("vlan10"))
+m1.run("ip link set dev %s mtu 8000" % m1.get_devname("vlan20"))
+m1.run("ip link set dev %s mtu 8000" % m1.get_devname("vlan30"))
 m2.run("ip link set dev %s mtu 8000" % m2.get_devname("eth1"))
+m2.run("ip link set dev %s mtu 8000" % m2.get_devname("vlan10"))
+m2.run("ip link set dev %s mtu 8000" % m2.get_devname("vlan20"))
+m2.run("ip link set dev %s mtu 8000" % m2.get_devname("vlan30"))
 
 for vlan1 in vlans:
     for vlan2 in vlans:
@@ -76,7 +82,7 @@ for vlan1 in vlans:
                                               "duration" : 60,
                                               "testname" : "UDP_STREAM",
                                               "netperf_opts" :
-                                                  "-L %s" % m2.get_ip(vlan1, 0)
+                                                  "-L %s -- -m 8000" % m2.get_ip(vlan1, 0)
                                           })
 
         netperf_cli_tcp6 = ctl.get_module("Netperf",
