@@ -101,30 +101,18 @@ class NetConfigDeviceEth(NetConfigDeviceGeneric):
         jitter= get_netem_option(config, "delay", "jitter")
         correlation = get_netem_option(config, "delay", "correlation")
         distribution = get_netem_option(config, "delay", "distribution")
-        # time is mandatory
-        if time is None:
-            raise Exception("DELAY: Time is mandatory")
-        # correlation or distribution can be set only when jitter is set
-        if jitter is None and (correlation is not None or distribution is not None):
-            raise Exception("DELAY: Correlation or distribution can be set only when jitter is set")
         rv = "delay %s " % time
         if jitter is not None:
             rv = rv + "%s " % jitter
             if correlation is not None:
                 rv = rv + "%s " % correlation
             if distribution is not None:
-                if distribution not in ["normal", "uniform", "pareto", "paretonormal"]:
-                    raise Exception("DELAY: Attribute distribution has invalid value.")
-                else:
                     rv = rv + "distribution %s " % distribution
         return rv
 
     def parse_loss(self, config):
         percent = get_netem_option(config, "loss", "percent")
         correlation = get_netem_option(config, "loss", "correlation")
-        # percent is mandatory
-        if percent is None:
-            raise Exception("LOSS: Percent is mandatory")
         rv = "loss %s " % percent
         if correlation is not None:
             rv = rv + "%s " % correlation
@@ -133,9 +121,6 @@ class NetConfigDeviceEth(NetConfigDeviceGeneric):
     def parse_corrupt(self, config):
         percent = get_netem_option(config, "corrupt", "percent")
         correlation = get_netem_option(config, "corrupt", "correlation")
-        # percent is mandatory
-        if percent is None:
-            raise Exception("CORRUPT: Percent is mandatory")
         rv = "corrupt %s " % percent
         if correlation is not None:
             rv = rv + "%s " % correlation
@@ -144,9 +129,6 @@ class NetConfigDeviceEth(NetConfigDeviceGeneric):
     def parse_duplication(self, config):
         percent = get_netem_option(config, "duplication", "percent")
         correlation = get_netem_option(config, "duplication", "correlation")
-        # percent is mandatory
-        if percent is None:
-            raise Exception("DUPLICATE: Percent is mandatory")
         rv = "duplicate %s " % percent
         if correlation is not None:
             rv = rv + "%s " % correlation
@@ -156,9 +138,6 @@ class NetConfigDeviceEth(NetConfigDeviceGeneric):
         percent = get_netem_option(config, "reordering", "percent")
         correlation = get_netem_option(config, "reordering", "correlation")
         gap_distance = get_netem_option(config, "reordering", "gap_distance")
-        # percent is mandatory
-        if percent is None:
-            raise Exception("REORDER: Percent is mandatory")
         rv = "reorder %s " % percent
         if correlation is not None:
             rv = rv + "%s " % correlation
