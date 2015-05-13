@@ -93,7 +93,7 @@ class NetConfigDeviceEth(NetConfigDeviceGeneric):
 
     def deconfigure(self):
         config = self._dev_config
-        if config["netem_cmd"] is not None:
+        if "netem_cmd" in config:
             exec_cmd(config["netem_cmd"].replace("add", "del"))
 
     def parse_delay(self, config):
