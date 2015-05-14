@@ -15,7 +15,7 @@ import logging
 import re
 import sys
 from lnst.Common.ExecCmd import exec_cmd
-from lnst.Slave.NetConfigCommon import get_slaves, get_option, get_slave_option, get_netem_option
+from lnst.Slave.NetConfigCommon import get_slaves, get_option, get_slave_option, parse_netem
 from lnst.Common.Utils import kmod_in_use, bool_it
 from lnst.Slave.NmConfigDevice import type_class_mapping as nm_type_class_mapping
 from lnst.Slave.NmConfigDevice import is_nm_managed
@@ -87,7 +87,7 @@ class NetConfigDeviceEth(NetConfigDeviceGeneric):
         exec_cmd("ip addr flush %s" % config["name"])
         exec_cmd("ethtool -A %s rx off tx off" % config["name"], die_on_err=False, log_outputs=False)
         if config["netem"] is not None:
-            cmd = "tc qdisc add dev %s root netem %s" % (config["name"], self.parse_netem(config["netem"]))
+            cmd = "tc qdisc add dev %s root netem %s" % (config["name"], parse_netem(config["netem"]))
             exec_cmd(cmd)
             config["netem_cmd"] = cmd
 
@@ -95,74 +95,6 @@ class NetConfigDeviceEth(NetConfigDeviceGeneric):
         config = self._dev_config
         if "netem_cmd" in config:
             exec_cmd(config["netem_cmd"].replace("add", "del"))
-
-    def parse_delay(self, config):
-        time = get_netem_option(config, "delay", "time")
-        jitter= get_netem_option(config, "delay", "jitter")
-        correlation = get_netem_option(config, "delay", "correlation")
-        distribution = get_netem_option(config, "delay", "distribution")
-        rv = "delay %s " % time
-        if jitter is not None:
-            rv = rv + "%s " % jitter
-            if correlation is not None:
-                rv = rv + "%s " % correlation
-            if distribution is not None:
-                    rv = rv + "distribution %s " % distribution
-        return rv
-
-    def parse_loss(self, config):
-        percent = get_netem_option(config, "loss", "percent")
-        correlation = get_netem_option(config, "loss", "correlation")
-        rv = "loss %s " % percent
-        if correlation is not None:
-            rv = rv + "%s " % correlation
-        return rv
-
-    def parse_corrupt(self, config):
-        percent = get_netem_option(config, "corrupt", "percent")
-        correlation = get_netem_option(config, "corrupt", "correlation")
-        rv = "corrupt %s " % percent
-        if correlation is not None:
-            rv = rv + "%s " % correlation
-        return rv
-
-    def parse_duplication(self, config):
-        percent = get_netem_option(config, "duplication", "percent")
-        correlation = get_netem_option(config, "duplication", "correlation")
-        rv = "duplicate %s " % percent
-        if correlation is not None:
-            rv = rv + "%s " % correlation
-        return rv
-
-    def parse_reordering(self, config):
-        percent = get_netem_option(config, "reordering", "percent")
-        correlation = get_netem_option(config, "reordering", "correlation")
-        gap_distance = get_netem_option(config, "reordering", "gap_distance")
-        rv = "reorder %s " % percent
-        if correlation is not None:
-            rv = rv + "%s " % correlation
-        if gap_distance is not None:
-            rv = rv + "gap %s " % gap_distance
-        return rv
-
-    def parse_netem(self, config):
-        rv = ""
-        # delay parsing
-        if "delay" in config:
-            rv = rv + self.parse_delay(config)
-        # loss parsing
-        if "loss" in config:
-            rv = rv + self.parse_loss(config)
-        # corrupt
-        if "corrupt" in config:
-            rv = rv + self.parse_corrupt(config)
-        # duplication
-        if "duplication" in config:
-            rv = rv + self.parse_duplication(config)
-        # reordering
-        if "reordering" in config:
-            rv = rv + self.parse_reordering(config)
-        return rv
 
 class NetConfigDeviceLoopback(NetConfigDeviceGeneric):
     def configure(self):
