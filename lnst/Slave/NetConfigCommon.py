@@ -45,7 +45,7 @@ def get_netem_option(netem_tag, netem_name, opt_name):
         if opt["name"] == opt_name:
             return opt["value"]
 
-def parse_delay(self, config):
+def parse_delay(config):
     time = get_netem_option(config, "delay", "time")
     jitter= get_netem_option(config, "delay", "jitter")
     correlation = get_netem_option(config, "delay", "correlation")
@@ -59,7 +59,7 @@ def parse_delay(self, config):
                 rv = rv + "distribution %s " % distribution
     return rv
 
-def parse_loss(self, config):
+def parse_loss(config):
     percent = get_netem_option(config, "loss", "percent")
     correlation = get_netem_option(config, "loss", "correlation")
     rv = "loss %s " % percent
@@ -67,7 +67,7 @@ def parse_loss(self, config):
         rv = rv + "%s " % correlation
     return rv
 
-def parse_corrupt(self, config):
+def parse_corrupt(config):
     percent = get_netem_option(config, "corrupt", "percent")
     correlation = get_netem_option(config, "corrupt", "correlation")
     rv = "corrupt %s " % percent
@@ -75,7 +75,7 @@ def parse_corrupt(self, config):
         rv = rv + "%s " % correlation
     return rv
 
-def parse_duplication(self, config):
+def parse_duplication(config):
     percent = get_netem_option(config, "duplication", "percent")
     correlation = get_netem_option(config, "duplication", "correlation")
     rv = "duplicate %s " % percent
@@ -83,7 +83,7 @@ def parse_duplication(self, config):
         rv = rv + "%s " % correlation
     return rv
 
-def parse_reordering(self, config):
+def parse_reordering(config):
     percent = get_netem_option(config, "reordering", "percent")
     correlation = get_netem_option(config, "reordering", "correlation")
     gap_distance = get_netem_option(config, "reordering", "gap_distance")
@@ -94,21 +94,21 @@ def parse_reordering(self, config):
         rv = rv + "gap %s " % gap_distance
     return rv
 
-def parse_netem(self, config):
+def parse_netem(config):
     rv = ""
     # delay parsing
     if "delay" in config:
-        rv = rv + self.parse_delay(config)
+        rv = rv + parse_delay(config)
     # loss parsing
     if "loss" in config:
-        rv = rv + self.parse_loss(config)
+        rv = rv + parse_loss(config)
     # corrupt
     if "corrupt" in config:
-        rv = rv + self.parse_corrupt(config)
+        rv = rv + parse_corrupt(config)
     # duplication
     if "duplication" in config:
-        rv = rv + self.parse_duplication(config)
+        rv = rv + parse_duplication(config)
     # reordering
     if "reordering" in config:
-        rv = rv + self.parse_reordering(config)
+        rv = rv + parse_reordering(config)
     return rv
