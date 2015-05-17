@@ -4,6 +4,11 @@
             <interfaces>
                 <eth id="testiface" label="testnet">
                     <netem>
+                        <delay>
+                            <options>
+                                <option name="time" value="10ms" />
+                            </options>
+                        </delay>
                         <reordering>
                             <options>
                                 <option name="percent" value="95%" />
