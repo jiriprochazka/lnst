@@ -26,7 +26,7 @@
                         <loss>
                             <options>
                                 <option name="percent" value="25%" />
-                                <option name="correlation" value="15%" />
+                                <option name="correlation" value="25%" />
                             </options>
                         </loss>
                         <duplication>
@@ -45,6 +45,39 @@
         <host id="machine2">
             <interfaces>
                 <eth id="testiface" label="testnet">
+                    <netem>
+                        <delay>
+                            <options>
+                                <option name="time" value="250ms" />
+                                <option name="jitter" value="25ms" />
+                                <option name="correlation" value="50%" />
+                            </options>
+                        </delay>
+                        <corrupt>
+                            <options>
+                                <option name="percent" value="25%" />
+                                <option name="correlation" value="25%" />
+                            </options>
+                        </corrupt>
+                        <reordering>
+                            <options>
+                                <option name="percent" value="25%" />
+                                <option name="correlation" value="25%" />
+                            </options>
+                        </reordering>
+                        <loss>
+                            <options>
+                                <option name="percent" value="25%" />
+                                <option name="correlation" value="15%" />
+                            </options>
+                        </loss>
+                        <duplication>
+                            <options>
+                                <option name="percent" value="25%" />
+                                <option name="correlation" value="25%" />
+                            </options>
+                        </duplication>
+                    </netem>
                     <addresses>
                         <address>192.168.101.11/24</address>
                     </addresses>

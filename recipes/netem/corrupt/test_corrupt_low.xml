@@ -20,6 +20,14 @@
         <host id="machine2">
             <interfaces>
                 <eth id="testiface" label="testnet">
+                    <netem>
+                        <corrupt>
+                            <options>
+                                <option name="percent" value="1%" />
+                                <option name="correlation" value="25%" />
+                            </options>
+                        </corrupt>
+                    </netem>
                     <addresses>
                         <address>192.168.101.11/24</address>
                     </addresses>

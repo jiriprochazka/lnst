@@ -6,14 +6,14 @@
                     <netem>
                         <delay>
                             <options>
-                                <option name="time" value="2500ms" />
-                                <option name="jitter" value="250ms" />
+                                <option name="time" value="1250ms" />
+                                <option name="jitter" value="125ms" />
                                 <option name="correlation" value="50%" />
                             </options>
                         </delay>
                         <loss>
                             <options>
-                                <option name="percent" value="95%" />
+                                <option name="percent" value="80%" />
                                 <option name="correlation" value="15%" />
                             </options>
                         </loss>
@@ -27,6 +27,21 @@
         <host id="machine2">
             <interfaces>
                 <eth id="testiface" label="testnet">
+                    <netem>
+                        <delay>
+                            <options>
+                                <option name="time" value="1250ms" />
+                                <option name="jitter" value="125ms" />
+                                <option name="correlation" value="50%" />
+                            </options>
+                        </delay>
+                        <loss>
+                            <options>
+                                <option name="percent" value="80%" />
+                                <option name="correlation" value="15%" />
+                            </options>
+                        </loss>
+                    </netem>
                     <addresses>
                         <address>192.168.101.11/24</address>
                     </addresses>

@@ -21,6 +21,15 @@
         <host id="machine2">
             <interfaces>
                 <eth id="testiface" label="testnet">
+                    <netem>
+                        <delay>
+                            <options>
+                                <option name="time" value="100ms" />
+                                <option name="jitter" value="10ms" />
+                                <option name="correlation" value="50%" />
+                            </options>
+                        </delay>
+                    </netem>
                     <addresses>
                         <address>192.168.101.11/24</address>
                     </addresses>

@@ -4,6 +4,11 @@
             <interfaces>
                 <eth id="testiface" label="testnet">
                     <netem>
+                        <delay>
+                            <options>
+                                <option name="time" value="50ms" />
+                            </options>
+                        </delay>
                         <reordering>
                             <options>
                                 <option name="percent" value="10%" />
@@ -19,6 +24,19 @@
         </host>
         <host id="machine2">
             <interfaces>
+                <netem>
+                    <delay>
+                        <options>
+                            <option name="time" value="50ms" />
+                        </options>
+                    </delay>
+                    <reordering>
+                        <options>
+                            <option name="percent" value="10%" />
+                            <option name="correlation" value="25%" />
+                        </options>
+                    </reordering>
+                </netem>
                 <eth id="testiface" label="testnet">
                     <addresses>
                         <address>192.168.101.11/24</address>
