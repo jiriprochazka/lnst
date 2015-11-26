@@ -5,7 +5,7 @@
     <network>
         <host id="machine1">
             <interfaces>
-                <eth id="testiface" label="testnet">
+                <eth id="eth1" label="testnet">
                     <addresses>
                         <address>{$net}.10/24</address>
                     </addresses>
@@ -14,7 +14,7 @@
         </host>
         <host id="machine2">
             <interfaces>
-                <eth id="testiface" label="testnet">
+                <eth id="eth1" label="testnet">
                     <addresses>
                         <address>{$net}.11/24</address>
                     </addresses>
