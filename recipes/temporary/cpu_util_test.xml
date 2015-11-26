@@ -1,0 +1,26 @@
+<lnstrecipe>
+    <define>
+        <alias name="net" value="192.168.101" />
+    </define>
+    <network>
+        <host id="machine1">
+            <interfaces>
+                <eth id="testiface" label="testnet">
+                    <addresses>
+                        <address>{$net}.10/24</address>
+                    </addresses>
+                </eth>
+            </interfaces>
+        </host>
+        <host id="machine2">
+            <interfaces>
+                <eth id="testiface" label="testnet">
+                    <addresses>
+                        <address>{$net}.11/24</address>
+                    </addresses>
+                </eth>
+            </interfaces>
+        </host>
+    </network>
+    <task python="cpu_util_test.py"/>
+</lnstrecipe>
