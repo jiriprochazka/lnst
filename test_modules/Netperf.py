@@ -37,7 +37,8 @@ class Netperf(TestGeneric):
         self._cpu_util = self.get_opt("cpu_util")
         self._num_parallel = int(self.get_opt("num_parallel", default=1))
         self._runs = self.get_opt("runs", default=1)
-
+        self._loc_cpu = self.get_opt("loc_cpu", default="")
+        self._rem_cpu = self.get_opt("rem_cpu", default="")
         self._threshold = self._parse_threshold(self.get_opt("threshold"))
         self._threshold_deviation = self._parse_threshold(
                                         self.get_opt("threshold_deviation"))
@@ -92,11 +93,11 @@ class Netperf(TestGeneric):
 
             if self._cpu_util is not None:
                 if self._cpu_util.lower() == "both":
-                    cmd += " -c -C"
+                    cmd += " -c %s -C %s" % (self._loc_cpu, self._rem_cpu)
                 elif self._cpu_util.lower() == "local":
-                    cmd += " -c"
+                    cmd += " -c %s" % self._loc_cpu
                 elif self._cpu_util.lower() == "remote":
-                    cmd += " -C"
+                    cmd += " -C %s" % self._rem_cpu
 
             if self._netperf_opts is not None:
                 """
