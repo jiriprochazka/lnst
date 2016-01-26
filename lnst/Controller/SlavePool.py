@@ -78,7 +78,7 @@ class SlavePool:
 
         if self._pool_checks:
             check_sockets = {}
-            for m_id, m in pool.iteritems():
+            for m_id, m in sorted(pool.iteritems()):
                 hostname = m["params"]["hostname"]
                 if "rpc_port" in m["params"]:
                     port = m["params"]["rpc_port"]
@@ -111,7 +111,7 @@ class SlavePool:
             for m_id in pool.keys():
                 pool[m_id]["available"] = True
 
-        for m_id in list(pool.keys()):
+        for m_id in sorted(list(pool.keys())):
             m = pool[m_id]
             if m["available"]:
                 if 'libvirt_domain' in m['params']:
@@ -402,7 +402,7 @@ class SetupMapper(object):
     def reset_match_state(self):
         self._net_label_mapping = {}
         self._machine_stack = []
-        self._unmatched_req_machines = self._mreqs.keys()
+        self._unmatched_req_machines = sorted(self._mreqs.keys())
 
         self._pool_stack = list(self._pools.keys())
         if len(self._pool_stack) > 0:
@@ -410,7 +410,7 @@ class SetupMapper(object):
             self._pool = self._pools[self._pool_name]
 
         self._unmatched_pool_machines = []
-        for p_id, p_machine in self._pool.iteritems():
+        for p_id, p_machine in sorted(self._pool.iteritems()):
             if self._virtual_matching:
                 if "libvirt_domain" in p_machine["params"]:
                     self._unmatched_pool_machines.append(p_id)
@@ -475,7 +475,7 @@ class SetupMapper(object):
                                      self._pool_name)
 
                         self._unmatched_pool_machines = []
-                        for p_id, p_machine in self._pool.iteritems():
+                        for p_id, p_machine in sorted(self._pool.iteritems()):
                             if self._virtual_matching:
                                 if "libvirt_domain" in p_machine["params"]:
                                     self._unmatched_pool_machines.append(p_id)
