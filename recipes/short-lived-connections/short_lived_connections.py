@@ -65,7 +65,7 @@ for size in ["1K,1K", "5K,5K", "7K,7K", "10K,10K", "12K,12K"]:
                                           "role" : "client",
                                           "netperf_server" : m1_testiface.get_ip(0),
                                           "duration" : netperf_duration,
-                                          "testname" : "TCP_CRR",
+                                          "testname" : "TCP_RR",
                                           "confidence" : nperf_confidence,
                                           "cpu_util" : nperf_cpu_util,
                                           "runs" : nperf_max_runs,
