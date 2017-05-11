@@ -130,12 +130,12 @@ for size in ["1K,1K", "5K,5K", "7K,7K", "10K,10K", "12K,12K"]:
     result_tcp_rr.set_parameter("rr_size", size)
 
     baseline = perf_api.get_baseline_of_result(result_tcp_rr)
-    netperf_baseline_template(netperf_cli_tcp_rr, baseline)
+    netperf_baseline_template(netperf_cli_tcp_rr, baseline, test_type="RR")
 
     tcp_rr_res_data = m2.run(netperf_cli_tcp_rr,
                           timeout = (netperf_duration + nperf_reserve)*nperf_max_runs)
 
-    netperf_result_template(result_tcp_rr, tcp_rr_res_data)
+    netperf_result_template(result_tcp_rr, tcp_rr_res_data, test_type="RR")
     result_tcp_rr.set_comment(pr_comment)
     perf_api.save_result(result_tcp_rr)
 
@@ -153,12 +153,12 @@ for size in ["1K,1K", "5K,5K", "7K,7K", "10K,10K", "12K,12K"]:
     result_tcp_crr.set_parameter("rr_size", size)
 
     baseline = perf_api.get_baseline_of_result(result_tcp_crr)
-    netperf_baseline_template(netperf_cli_tcp_crr, baseline)
+    netperf_baseline_template(netperf_cli_tcp_crr, baseline, test_type="RR")
 
     tcp_crr_res_data = m2.run(netperf_cli_tcp_crr,
                           timeout = (netperf_duration + nperf_reserve)*nperf_max_runs)
 
-    netperf_result_template(result_tcp_crr, tcp_crr_res_data)
+    netperf_result_template(result_tcp_crr, tcp_crr_res_data, test_type="RR")
     result_tcp_crr.set_comment(pr_comment)
     perf_api.save_result(result_tcp_crr)
 
