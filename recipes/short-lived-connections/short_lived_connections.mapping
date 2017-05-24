@@ -1,0 +1,26 @@
+tcp_rr_id = short_lived_connections_tcp_rr
+tcp_crr_id = short_lived_connections_tcp_crr
+
+# ======================= RHEL7 =========================
+# TCP_RR
+# ixgbe
+# 2017-05 RHEL7 short_lived_connections_tcp_rr hash
+# i40e
+# mlx4_en
+# be2net
+# TCP_CRR
+# ixgbe
+# i40e
+# mlx4_en
+# be2net
+# ======================= RHEL6 =========================
+# TCP_RR
+# ixgbe
+# i40e
+# mlx4_en
+# be2net
+# TCP_CRR
+# ixgbe
+# i40e
+# mlx4_en
+# be2net
